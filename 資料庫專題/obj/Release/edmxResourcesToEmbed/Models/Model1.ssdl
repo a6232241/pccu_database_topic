@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="brtuModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="beveragestore">
+    <Key>
+      <PropertyRef Name="shopName" />
+    </Key>
+    <Property Name="shopName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="shopTotal" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="recommendeddrink">
+    <Key>
+      <PropertyRef Name="RecommendedDrinkId" />
+    </Key>
+    <Property Name="RecommendedDrinkId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="shopName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Drink" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DrinkPrice" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tea">
+    <Key>
+      <PropertyRef Name="TeaId" />
+    </Key>
+    <Property Name="TeaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="shopName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Variety" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="VarietyPrice" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="usergroup">
+    <Key>
+      <PropertyRef Name="UserGroupId" />
+    </Key>
+    <Property Name="UserGroupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="shopName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="UGroup" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="AverageAge" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="recommendeddrink_ibfk_1">
+    <End Role="beveragestore" Type="Self.beveragestore" Multiplicity="1" />
+    <End Role="recommendeddrink" Type="Self.recommendeddrink" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="beveragestore">
+        <PropertyRef Name="shopName" />
+      </Principal>
+      <Dependent Role="recommendeddrink">
+        <PropertyRef Name="shopName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="tea_ibfk_1">
+    <End Role="beveragestore" Type="Self.beveragestore" Multiplicity="1" />
+    <End Role="tea" Type="Self.tea" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="beveragestore">
+        <PropertyRef Name="shopName" />
+      </Principal>
+      <Dependent Role="tea">
+        <PropertyRef Name="shopName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="usergroup_ibfk_1">
+    <End Role="beveragestore" Type="Self.beveragestore" Multiplicity="1" />
+    <End Role="usergroup" Type="Self.usergroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="beveragestore">
+        <PropertyRef Name="shopName" />
+      </Principal>
+      <Dependent Role="usergroup">
+        <PropertyRef Name="shopName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="brtuModelStoreContainer">
+    <EntitySet Name="beveragestore" EntityType="Self.beveragestore" Schema="brtu" store:Type="Tables" />
+    <EntitySet Name="recommendeddrink" EntityType="Self.recommendeddrink" Schema="brtu" store:Type="Tables" />
+    <EntitySet Name="tea" EntityType="Self.tea" Schema="brtu" store:Type="Tables" />
+    <EntitySet Name="usergroup" EntityType="Self.usergroup" Schema="brtu" store:Type="Tables" />
+    <AssociationSet Name="recommendeddrink_ibfk_1" Association="Self.recommendeddrink_ibfk_1">
+      <End Role="beveragestore" EntitySet="beveragestore" />
+      <End Role="recommendeddrink" EntitySet="recommendeddrink" />
+    </AssociationSet>
+    <AssociationSet Name="tea_ibfk_1" Association="Self.tea_ibfk_1">
+      <End Role="beveragestore" EntitySet="beveragestore" />
+      <End Role="tea" EntitySet="tea" />
+    </AssociationSet>
+    <AssociationSet Name="usergroup_ibfk_1" Association="Self.usergroup_ibfk_1">
+      <End Role="beveragestore" EntitySet="beveragestore" />
+      <End Role="usergroup" EntitySet="usergroup" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

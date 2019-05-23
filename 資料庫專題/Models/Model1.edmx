@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="brtuModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="beveragestore">
+          <Key>
+            <PropertyRef Name="shopName" />
+          </Key>
+          <Property Name="shopName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="shopTotal" Type="int" />
+        </EntityType>
+        <EntityType Name="recommendeddrink">
+          <Key>
+            <PropertyRef Name="RecommendedDrinkId" />
+          </Key>
+          <Property Name="RecommendedDrinkId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="shopName" Type="varchar" MaxLength="50" />
+          <Property Name="Drink" Type="varchar" MaxLength="50" />
+          <Property Name="DrinkPrice" Type="int" />
+        </EntityType>
+        <EntityType Name="tea">
+          <Key>
+            <PropertyRef Name="TeaId" />
+          </Key>
+          <Property Name="TeaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="shopName" Type="varchar" MaxLength="50" />
+          <Property Name="Variety" Type="varchar" MaxLength="50" />
+          <Property Name="VarietyPrice" Type="int" />
+        </EntityType>
+        <EntityType Name="usergroup">
+          <Key>
+            <PropertyRef Name="UserGroupId" />
+          </Key>
+          <Property Name="UserGroupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="shopName" Type="varchar" MaxLength="50" />
+          <Property Name="UGroup" Type="varchar" MaxLength="50" />
+          <Property Name="AverageAge" Type="int" />
+        </EntityType>
+        <Association Name="recommendeddrink_ibfk_1">
+          <End Role="beveragestore" Type="Self.beveragestore" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="recommendeddrink" Type="Self.recommendeddrink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="beveragestore">
+              <PropertyRef Name="shopName" />
+            </Principal>
+            <Dependent Role="recommendeddrink">
+              <PropertyRef Name="shopName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tea_ibfk_1">
+          <End Role="beveragestore" Type="Self.beveragestore" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tea" Type="Self.tea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="beveragestore">
+              <PropertyRef Name="shopName" />
+            </Principal>
+            <Dependent Role="tea">
+              <PropertyRef Name="shopName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="usergroup_ibfk_1">
+          <End Role="beveragestore" Type="Self.beveragestore" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="usergroup" Type="Self.usergroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="beveragestore">
+              <PropertyRef Name="shopName" />
+            </Principal>
+            <Dependent Role="usergroup">
+              <PropertyRef Name="shopName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="brtuModelStoreContainer">
+          <EntitySet Name="beveragestore" EntityType="Self.beveragestore" Schema="brtu" store:Type="Tables" />
+          <EntitySet Name="recommendeddrink" EntityType="Self.recommendeddrink" Schema="brtu" store:Type="Tables" />
+          <EntitySet Name="tea" EntityType="Self.tea" Schema="brtu" store:Type="Tables" />
+          <EntitySet Name="usergroup" EntityType="Self.usergroup" Schema="brtu" store:Type="Tables" />
+          <AssociationSet Name="recommendeddrink_ibfk_1" Association="Self.recommendeddrink_ibfk_1">
+            <End Role="beveragestore" EntitySet="beveragestore" />
+            <End Role="recommendeddrink" EntitySet="recommendeddrink" />
+          </AssociationSet>
+          <AssociationSet Name="tea_ibfk_1" Association="Self.tea_ibfk_1">
+            <End Role="beveragestore" EntitySet="beveragestore" />
+            <End Role="tea" EntitySet="tea" />
+          </AssociationSet>
+          <AssociationSet Name="usergroup_ibfk_1" Association="Self.usergroup_ibfk_1">
+            <End Role="beveragestore" EntitySet="beveragestore" />
+            <End Role="usergroup" EntitySet="usergroup" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="brtuModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="brtuEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="beveragestore" EntityType="brtuModel.beveragestore" />
+          <EntitySet Name="recommendeddrink" EntityType="brtuModel.recommendeddrink" />
+          <EntitySet Name="tea" EntityType="brtuModel.tea" />
+          <EntitySet Name="usergroup" EntityType="brtuModel.usergroup" />
+          <AssociationSet Name="recommendeddrink_ibfk_1" Association="brtuModel.recommendeddrink_ibfk_1">
+            <End Role="beveragestore" EntitySet="beveragestore" />
+            <End Role="recommendeddrink" EntitySet="recommendeddrink" />
+          </AssociationSet>
+          <AssociationSet Name="tea_ibfk_1" Association="brtuModel.tea_ibfk_1">
+            <End Role="beveragestore" EntitySet="beveragestore" />
+            <End Role="tea" EntitySet="tea" />
+          </AssociationSet>
+          <AssociationSet Name="usergroup_ibfk_1" Association="brtuModel.usergroup_ibfk_1">
+            <End Role="beveragestore" EntitySet="beveragestore" />
+            <End Role="usergroup" EntitySet="usergroup" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="beveragestore">
+          <Key>
+            <PropertyRef Name="shopName" />
+          </Key>
+          <Property Name="shopName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="shopTotal" Type="Int32" />
+          <NavigationProperty Name="recommendeddrink" Relationship="brtuModel.recommendeddrink_ibfk_1" FromRole="beveragestore" ToRole="recommendeddrink" />
+          <NavigationProperty Name="tea" Relationship="brtuModel.tea_ibfk_1" FromRole="beveragestore" ToRole="tea" />
+          <NavigationProperty Name="usergroup" Relationship="brtuModel.usergroup_ibfk_1" FromRole="beveragestore" ToRole="usergroup" />
+        </EntityType>
+        <EntityType Name="recommendeddrink">
+          <Key>
+            <PropertyRef Name="RecommendedDrinkId" />
+          </Key>
+          <Property Name="RecommendedDrinkId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="shopName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Drink" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DrinkPrice" Type="Int32" />
+          <NavigationProperty Name="beveragestore" Relationship="brtuModel.recommendeddrink_ibfk_1" FromRole="recommendeddrink" ToRole="beveragestore" />
+        </EntityType>
+        <EntityType Name="tea">
+          <Key>
+            <PropertyRef Name="TeaId" />
+          </Key>
+          <Property Name="TeaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="shopName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Variety" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VarietyPrice" Type="Int32" />
+          <NavigationProperty Name="beveragestore" Relationship="brtuModel.tea_ibfk_1" FromRole="tea" ToRole="beveragestore" />
+        </EntityType>
+        <EntityType Name="usergroup">
+          <Key>
+            <PropertyRef Name="UserGroupId" />
+          </Key>
+          <Property Name="UserGroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="shopName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AverageAge" Type="Int32" />
+          <NavigationProperty Name="beveragestore" Relationship="brtuModel.usergroup_ibfk_1" FromRole="usergroup" ToRole="beveragestore" />
+        </EntityType>
+        <Association Name="recommendeddrink_ibfk_1">
+          <End Type="brtuModel.beveragestore" Role="beveragestore" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="brtuModel.recommendeddrink" Role="recommendeddrink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="beveragestore">
+              <PropertyRef Name="shopName" />
+            </Principal>
+            <Dependent Role="recommendeddrink">
+              <PropertyRef Name="shopName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tea_ibfk_1">
+          <End Type="brtuModel.beveragestore" Role="beveragestore" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="brtuModel.tea" Role="tea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="beveragestore">
+              <PropertyRef Name="shopName" />
+            </Principal>
+            <Dependent Role="tea">
+              <PropertyRef Name="shopName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="usergroup_ibfk_1">
+          <End Type="brtuModel.beveragestore" Role="beveragestore" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="brtuModel.usergroup" Role="usergroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="beveragestore">
+              <PropertyRef Name="shopName" />
+            </Principal>
+            <Dependent Role="usergroup">
+              <PropertyRef Name="shopName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="brtuModelStoreContainer" CdmEntityContainer="brtuEntities">
+          <EntitySetMapping Name="beveragestore">
+            <EntityTypeMapping TypeName="brtuModel.beveragestore">
+              <MappingFragment StoreEntitySet="beveragestore">
+                <ScalarProperty Name="shopTotal" ColumnName="shopTotal" />
+                <ScalarProperty Name="shopName" ColumnName="shopName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="recommendeddrink">
+            <EntityTypeMapping TypeName="brtuModel.recommendeddrink">
+              <MappingFragment StoreEntitySet="recommendeddrink">
+                <ScalarProperty Name="DrinkPrice" ColumnName="DrinkPrice" />
+                <ScalarProperty Name="Drink" ColumnName="Drink" />
+                <ScalarProperty Name="shopName" ColumnName="shopName" />
+                <ScalarProperty Name="RecommendedDrinkId" ColumnName="RecommendedDrinkId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tea">
+            <EntityTypeMapping TypeName="brtuModel.tea">
+              <MappingFragment StoreEntitySet="tea">
+                <ScalarProperty Name="VarietyPrice" ColumnName="VarietyPrice" />
+                <ScalarProperty Name="Variety" ColumnName="Variety" />
+                <ScalarProperty Name="shopName" ColumnName="shopName" />
+                <ScalarProperty Name="TeaId" ColumnName="TeaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usergroup">
+            <EntityTypeMapping TypeName="brtuModel.usergroup">
+              <MappingFragment StoreEntitySet="usergroup">
+                <ScalarProperty Name="AverageAge" ColumnName="AverageAge" />
+                <ScalarProperty Name="UGroup" ColumnName="UGroup" />
+                <ScalarProperty Name="shopName" ColumnName="shopName" />
+                <ScalarProperty Name="UserGroupId" ColumnName="UserGroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

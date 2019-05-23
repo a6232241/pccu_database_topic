@@ -1,0 +1,38 @@
+﻿@model 資料庫專題.Models.beveragestore
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>飲料店</h2>
+
+<div>
+    <h4>刪除</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.shopName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.shopName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.shopTotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.shopTotal)<span>家</span>
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

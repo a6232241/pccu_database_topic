@@ -1,0 +1,45 @@
+﻿@model IEnumerable<資料庫專題.Models.recommendeddrink>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>推薦飲料</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.beveragestore.shopName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Drink)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DrinkPrice)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.beveragestore.shopName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Drink)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DrinkPrice)<span>元</span>
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.RecommendedDrinkId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.RecommendedDrinkId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.RecommendedDrinkId })
+        </td>
+    </tr>
+}
+
+</table>

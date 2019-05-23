@@ -1,0 +1,45 @@
+﻿@model IEnumerable<資料庫專題.Models.tea>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>茶類</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.beveragestore.shopName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Variety)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VarietyPrice)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.beveragestore.shopName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Variety)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VarietyPrice)<span>元</span>
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.TeaId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.TeaId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.TeaId })
+        </td>
+    </tr>
+}
+
+</table>

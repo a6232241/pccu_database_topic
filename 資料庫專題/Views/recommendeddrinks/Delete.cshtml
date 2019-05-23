@@ -1,0 +1,46 @@
+﻿@model 資料庫專題.Models.recommendeddrink
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>推薦飲料</h2>
+
+<div>
+    <h4>刪除</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.beveragestore.shopName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.beveragestore.shopName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Drink)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Drink)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DrinkPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DrinkPrice)<span>元</span>
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

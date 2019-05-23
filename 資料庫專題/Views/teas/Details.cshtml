@@ -1,0 +1,41 @@
+﻿@model 資料庫專題.Models.tea
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>茶類</h2>
+
+<div>
+    <h4>細項</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.beveragestore.shopName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.beveragestore.shopName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Variety)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Variety)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VarietyPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VarietyPrice)<span>元</span>
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TeaId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

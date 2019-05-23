@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="brtuModelStoreContainer" CdmEntityContainer="brtuEntities">
+    <EntitySetMapping Name="beveragestore">
+      <EntityTypeMapping TypeName="brtuModel.beveragestore">
+        <MappingFragment StoreEntitySet="beveragestore">
+          <ScalarProperty Name="shopName" ColumnName="shopName" />
+          <ScalarProperty Name="shopTotal" ColumnName="shopTotal" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="recommendeddrink">
+      <EntityTypeMapping TypeName="brtuModel.recommendeddrink">
+        <MappingFragment StoreEntitySet="recommendeddrink">
+          <ScalarProperty Name="RecommendedDrinkId" ColumnName="RecommendedDrinkId" />
+          <ScalarProperty Name="shopName" ColumnName="shopName" />
+          <ScalarProperty Name="Drink" ColumnName="Drink" />
+          <ScalarProperty Name="DrinkPrice" ColumnName="DrinkPrice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tea">
+      <EntityTypeMapping TypeName="brtuModel.tea">
+        <MappingFragment StoreEntitySet="tea">
+          <ScalarProperty Name="TeaId" ColumnName="TeaId" />
+          <ScalarProperty Name="shopName" ColumnName="shopName" />
+          <ScalarProperty Name="Variety" ColumnName="Variety" />
+          <ScalarProperty Name="VarietyPrice" ColumnName="VarietyPrice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="usergroup">
+      <EntityTypeMapping TypeName="brtuModel.usergroup">
+        <MappingFragment StoreEntitySet="usergroup">
+          <ScalarProperty Name="UserGroupId" ColumnName="UserGroupId" />
+          <ScalarProperty Name="shopName" ColumnName="shopName" />
+          <ScalarProperty Name="UGroup" ColumnName="UGroup" />
+          <ScalarProperty Name="AverageAge" ColumnName="AverageAge" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

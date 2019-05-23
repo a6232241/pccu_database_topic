@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="brtuModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="beveragestore">
+    <Key>
+      <PropertyRef Name="shopName" />
+    </Key>
+    <Property Name="shopName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="shopTotal" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="recommendeddrink" Relationship="Self.recommendeddrink_ibfk_1" FromRole="beveragestore" ToRole="recommendeddrink" />
+    <NavigationProperty Name="tea" Relationship="Self.tea_ibfk_1" FromRole="beveragestore" ToRole="tea" />
+    <NavigationProperty Name="usergroup" Relationship="Self.usergroup_ibfk_1" FromRole="beveragestore" ToRole="usergroup" />
+  </EntityType>
+  <EntityType Name="recommendeddrink">
+    <Key>
+      <PropertyRef Name="RecommendedDrinkId" />
+    </Key>
+    <Property Name="RecommendedDrinkId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="shopName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Drink" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DrinkPrice" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="beveragestore" Relationship="Self.recommendeddrink_ibfk_1" FromRole="recommendeddrink" ToRole="beveragestore" />
+  </EntityType>
+  <EntityType Name="tea">
+    <Key>
+      <PropertyRef Name="TeaId" />
+    </Key>
+    <Property Name="TeaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="shopName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Variety" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="VarietyPrice" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="beveragestore" Relationship="Self.tea_ibfk_1" FromRole="tea" ToRole="beveragestore" />
+  </EntityType>
+  <EntityType Name="usergroup">
+    <Key>
+      <PropertyRef Name="UserGroupId" />
+    </Key>
+    <Property Name="UserGroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="shopName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AverageAge" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="beveragestore" Relationship="Self.usergroup_ibfk_1" FromRole="usergroup" ToRole="beveragestore" />
+  </EntityType>
+  <Association Name="recommendeddrink_ibfk_1">
+    <End Role="beveragestore" Type="Self.beveragestore" Multiplicity="1" />
+    <End Role="recommendeddrink" Type="Self.recommendeddrink" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="beveragestore">
+        <PropertyRef Name="shopName" />
+      </Principal>
+      <Dependent Role="recommendeddrink">
+        <PropertyRef Name="shopName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="tea_ibfk_1">
+    <End Role="beveragestore" Type="Self.beveragestore" Multiplicity="1" />
+    <End Role="tea" Type="Self.tea" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="beveragestore">
+        <PropertyRef Name="shopName" />
+      </Principal>
+      <Dependent Role="tea">
+        <PropertyRef Name="shopName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="usergroup_ibfk_1">
+    <End Role="beveragestore" Type="Self.beveragestore" Multiplicity="1" />
+    <End Role="usergroup" Type="Self.usergroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="beveragestore">
+        <PropertyRef Name="shopName" />
+      </Principal>
+      <Dependent Role="usergroup">
+        <PropertyRef Name="shopName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="brtuEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="beveragestore" EntityType="Self.beveragestore" />
+    <EntitySet Name="recommendeddrink" EntityType="Self.recommendeddrink" />
+    <EntitySet Name="tea" EntityType="Self.tea" />
+    <EntitySet Name="usergroup" EntityType="Self.usergroup" />
+    <AssociationSet Name="recommendeddrink_ibfk_1" Association="Self.recommendeddrink_ibfk_1">
+      <End Role="beveragestore" EntitySet="beveragestore" />
+      <End Role="recommendeddrink" EntitySet="recommendeddrink" />
+    </AssociationSet>
+    <AssociationSet Name="tea_ibfk_1" Association="Self.tea_ibfk_1">
+      <End Role="beveragestore" EntitySet="beveragestore" />
+      <End Role="tea" EntitySet="tea" />
+    </AssociationSet>
+    <AssociationSet Name="usergroup_ibfk_1" Association="Self.usergroup_ibfk_1">
+      <End Role="beveragestore" EntitySet="beveragestore" />
+      <End Role="usergroup" EntitySet="usergroup" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
