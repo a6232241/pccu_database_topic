@@ -1,4 +1,4 @@
-﻿
+
 # 新增飲料店資料表
 CREATE TABLE BeverageStore (  
 	shopName varchar(50) NOT NULL primary key,  # 店名
