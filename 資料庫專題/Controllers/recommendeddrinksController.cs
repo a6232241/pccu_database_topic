@@ -7,28 +7,45 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using 資料庫專題.Models;
+using 資料庫專題.Repositories;
+using 資料庫專題.Services;
 
 namespace 資料庫專題.Controllers
 {
     public class recommendeddrinksController : Controller
     {
-        private brtuEntities db = new brtuEntities();
+        private recommendeddrinkServices _recommendeddrinkService = new recommendeddrinkServices(new recommendeddrink_repository());
 
         // GET: recommendeddrinks
         public ActionResult Index()
         {
-            var recommendeddrink = db.recommendeddrink.Include(r => r.beveragestore);
-            return View(recommendeddrink.ToList());
+            return View(_recommendeddrinkService.GetAllRecommendedrink());
         }
 
-        // GET: recommendeddrinks/Details/5
-        public ActionResult Details(int? id)
+        #region HttpGet
+        // GET: recommendeddrinks/Create
+        public ActionResult Create()
         {
-            if (id == null)
+            ViewBag.shopName = _recommendeddrinkService.SearchBeveragestore();
+            return View();
+        }
+
+        // GET: recommendeddrinks/Edit/5
+        public ActionResult Edit(int id)
+        {
+            recommendeddrink recommendeddrink = _recommendeddrinkService.QueryRecommendeddrink(id);
+            if (recommendeddrink == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return HttpNotFound();
             }
-            recommendeddrink recommendeddrink = db.recommendeddrink.Find(id);
+            ViewBag.shopName = _recommendeddrinkService.SearchBeveragestore();
+            return View(recommendeddrink);
+        }
+
+        // GET: recommendeddrinks/Delete/5
+        public ActionResult Delete(int id)
+        {
+            recommendeddrink recommendeddrink = _recommendeddrinkService.QueryRecommendeddrink(id);
             if (recommendeddrink == null)
             {
                 return HttpNotFound();
@@ -36,76 +53,33 @@ namespace 資料庫專題.Controllers
             return View(recommendeddrink);
         }
 
-        // GET: recommendeddrinks/Create
-        public ActionResult Create()
-        {
-            ViewBag.shopName = new SelectList(db.beveragestore, "shopName", "shopName");
-            return View();
-        }
+        #endregion
 
-        // POST: recommendeddrinks/Create
-        // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
-        // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
+        #region HttpPost
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "RecommendedDrinkId,shopName,Drink,DrinkPrice")] recommendeddrink recommendeddrink)
         {
             if (ModelState.IsValid)
             {
-                db.recommendeddrink.Add(recommendeddrink);
-                db.SaveChanges();
+                _recommendeddrinkService.CreateNewRecommendeddrink(recommendeddrink);
                 return RedirectToAction("Index");
             }
 
-            ViewBag.shopName = new SelectList(db.beveragestore, "shopName", "shopName", recommendeddrink.shopName);
+            ViewBag.shopName = _recommendeddrinkService.SearchBeveragestore();
             return View(recommendeddrink);
         }
 
-        // GET: recommendeddrinks/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            recommendeddrink recommendeddrink = db.recommendeddrink.Find(id);
-            if (recommendeddrink == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.shopName = new SelectList(db.beveragestore, "shopName", "shopName", recommendeddrink.shopName);
-            return View(recommendeddrink);
-        }
-
-        // POST: recommendeddrinks/Edit/5
-        // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
-        // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "RecommendedDrinkId,shopName,Drink,DrinkPrice")] recommendeddrink recommendeddrink)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(recommendeddrink).State = EntityState.Modified;
-                db.SaveChanges();
+                _recommendeddrinkService.UpdateRecommendeddrink(recommendeddrink);
                 return RedirectToAction("Index");
             }
-            ViewBag.shopName = new SelectList(db.beveragestore, "shopName", "shopName", recommendeddrink.shopName);
-            return View(recommendeddrink);
-        }
-
-        // GET: recommendeddrinks/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            recommendeddrink recommendeddrink = db.recommendeddrink.Find(id);
-            if (recommendeddrink == null)
-            {
-                return HttpNotFound();
-            }
+            ViewBag.shopName = _recommendeddrinkService.SearchBeveragestore();
             return View(recommendeddrink);
         }
 
@@ -114,19 +88,9 @@ namespace 資料庫專題.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            recommendeddrink recommendeddrink = db.recommendeddrink.Find(id);
-            db.recommendeddrink.Remove(recommendeddrink);
-            db.SaveChanges();
+            _recommendeddrinkService.DeleteRecommendedrink(id);
             return RedirectToAction("Index");
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        #endregion
     }
 }

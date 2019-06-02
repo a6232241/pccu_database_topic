@@ -7,55 +7,25 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using 資料庫專題.Models;
+using 資料庫專題.Repositories;
+using 資料庫專題.Services;
 
 namespace 資料庫專題.Controllers
 {
     public class beveragestoresController : Controller
     {
-        private brtuEntities db = new brtuEntities();
-
+        private beveragestoreServices _beveragestoreService = new beveragestoreServices(new beveragestore_repository());
         // GET: beveragestores
         public ActionResult Index()
         {
-            return View(db.beveragestore.ToList());
+            return View(_beveragestoreService.GetAllBeveragestores());
         }
 
-        // GET: beveragestores/Details/5
-        public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            beveragestore beveragestore = db.beveragestore.Find(id);
-            if (beveragestore == null)
-            {
-                return HttpNotFound();
-            }
-            return View(beveragestore);
-        }
-
+        #region HttpGet
         // GET: beveragestores/Create
         public ActionResult Create()
         {
             return View();
-        }
-
-        // POST: beveragestores/Create
-        // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
-        // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "shopName,shopTotal")] beveragestore beveragestore)
-        {
-            if (ModelState.IsValid)
-            {
-                db.beveragestore.Add(beveragestore);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(beveragestore);
         }
 
         // GET: beveragestores/Edit/5
@@ -65,26 +35,10 @@ namespace 資料庫專題.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            beveragestore beveragestore = db.beveragestore.Find(id);
+            var beveragestore = _beveragestoreService.QueryBeveragestoresById(id);
             if (beveragestore == null)
             {
                 return HttpNotFound();
-            }
-            return View(beveragestore);
-        }
-
-        // POST: beveragestores/Edit/5
-        // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
-        // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "shopName,shopTotal")] beveragestore beveragestore)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(beveragestore).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
             }
             return View(beveragestore);
         }
@@ -96,10 +50,39 @@ namespace 資料庫專題.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            beveragestore beveragestore = db.beveragestore.Find(id);
+            var beveragestore = _beveragestoreService.QueryBeveragestoresById(id);
             if (beveragestore == null)
             {
                 return HttpNotFound();
+            }
+            return View(beveragestore);
+        }
+        #endregion
+
+        #region HttpPost
+        // POST: beveragestores/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "shopName,shopTotal")] beveragestore beveragestore)
+        {
+            if (ModelState.IsValid)
+            {
+                _beveragestoreService.CreateNewBeveragestore(beveragestore);
+                return RedirectToAction("Index");
+            }
+
+            return View(beveragestore);
+        }
+
+        // POST: beveragestores/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "shopName,shopTotal")] beveragestore beveragestore)
+        {
+            if (ModelState.IsValid)
+            {
+                _beveragestoreService.UpdateBeveragestore(beveragestore);
+                return RedirectToAction("Index");
             }
             return View(beveragestore);
         }
@@ -109,19 +92,9 @@ namespace 資料庫專題.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            beveragestore beveragestore = db.beveragestore.Find(id);
-            db.beveragestore.Remove(beveragestore);
-            db.SaveChanges();
+            _beveragestoreService.DeleteBeveragestore(id);
             return RedirectToAction("Index");
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        #endregion
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace 資料庫專題.Services
+namespace 資料庫專題.Interface
 {
     public interface IRepository<T>
     {
@@ -12,7 +12,10 @@ namespace 資料庫專題.Services
         IEnumerable<T> GetAll();
 
         //取得單筆資料
-        T GetSingle(long id);
+        T GetSingle(int id);
+
+        //取得單筆資料
+        T GetSingle(string id);
 
         //根據Primary key 更新資料
         void Update(T entity);
@@ -21,9 +24,11 @@ namespace 資料庫專題.Services
         void Add(T entity);
 
         //移除單筆資料
-        void Delete(T entity);
+        void Delete(int id);
 
         //移除單筆資料
-        void Delete(int id);
+        void Delete(string id);
+
+        dynamic SearchPrimaryKey();
     }
 }

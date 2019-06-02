@@ -23,7 +23,7 @@ namespace 資料庫專題.Models
 
         [DisplayName("飲料名稱")]
         [Required(ErrorMessage = "這個欄位不能為空!")]
-        [RegularExpression(@"^[^\d]$", ErrorMessage = "請輸入中文或英文")]
+        [RegularExpression(@"^[^\d]*$", ErrorMessage = "請輸入中文或英文")]
         public string Drink { get; set; }
 
         [DisplayName("飲料價格(TWD)")]

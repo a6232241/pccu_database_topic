@@ -11,33 +11,35 @@
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <h4>編輯</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.LabelFor(model => model.shopName, htmlAttributes: new { @class = "control-label" })
-            </dt>
-            <dd>
-                @Html.DisplayFor(modelItme => modelItme.shopName)
-            </dd>
+<div class="form-horizontal">
+    <h4>編輯</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.shopName)
 
-            <dt>
-                @Html.LabelFor(model => model.shopTotal, htmlAttributes: new { @class = "control-label" })
-            </dt>
-            <dd>
-                @Html.EditorFor(model => model.shopTotal, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.shopTotal, "", new { @class = "text-danger" })
-            </dd>
-        </dl>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.LabelFor(model => model.shopName, htmlAttributes: new { @class = "control-label" })
+        </dt>
+        <dd>
+            @Html.DisplayFor(modelItme => modelItme.shopName)
+        </dd>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+        <dt>
+            @Html.LabelFor(model => model.shopTotal, htmlAttributes: new { @class = "control-label" })
+        </dt>
+        <dd>
+            @Html.EditorFor(model => model.shopTotal, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.shopTotal, "", new { @class = "text-danger" })
+        </dd>
+    </dl>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
         </div>
     </div>
+</div>
 }
 
 <div>
